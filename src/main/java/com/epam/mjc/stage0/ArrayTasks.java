@@ -11,7 +11,7 @@ public class ArrayTasks {
      * Return a String[] array that will list all the seasons of the year, starting with winter.
      */
     public String[] seasonsArray() {
-
+        return new String[]{"winter", "spring", "summer", "autumn"};
     }
 
     /**
@@ -25,7 +25,11 @@ public class ArrayTasks {
      * length = 5  -> [1, 2, 3, 4, 5]
      */
     public int[] generateNumbers(int length) {
-
+        int[] arrayOfNumber = new int[length];
+        for (int i = 0; i < length; i++) {
+            arrayOfNumber[i] = i + 1;
+        }
+        return arrayOfNumber;
     }
 
     /**
@@ -37,7 +41,11 @@ public class ArrayTasks {
      * arr = [5, -3, -4] -> sum = -2
      */
     public int totalSum(int[] arr) {
-
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+        }
+        return sum;
     }
 
     /**
@@ -50,7 +58,14 @@ public class ArrayTasks {
      * arr = [5, -3, -4],   number = 10    ->  -1
      */
     public int findIndexOfNumber(int[] arr, int number) {
-
+        int index = -1;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == number) {
+                index = i;
+                return index;
+            }
+        }
+        return index;
     }
 
     /**
@@ -63,7 +78,13 @@ public class ArrayTasks {
      * arr = ["pineapple", "apple", "pen"] -> ["pen", "apple", "pineapple"]
      */
     public String[] reverseArray(String[] arr) {
-
+        String[] reversedArr = new String[arr.length];
+        int reverseCounter = arr.length;
+        for (int i = 0; i < arr.length; i++) {
+            reversedArr[reverseCounter - 1] = arr[i];
+            reverseCounter -= 1;
+        }
+        return reversedArr;
     }
 
     /**
@@ -78,7 +99,21 @@ public class ArrayTasks {
      * arr = [1, 2]         -> [1, 2]
      */
     public int[] getOnlyPositiveNumbers(int[] arr) {
-
+        int countOfNegatives = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < 1) {
+                countOfNegatives++;
+            }
+        }
+        int[] newArr = new int[arr.length - countOfNegatives];
+        int counterOfNewArr = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0) {
+                newArr[counterOfNewArr] = arr[i];
+                counterOfNewArr += 1;
+            }
+        }
+        return newArr;
     }
 
     /**
@@ -92,6 +127,41 @@ public class ArrayTasks {
      * arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
     public int[][] sortRaggedArray(int[][] arr) {
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = sortRowsByLength(arr);
+        }
+        for (int row = 0; row < arr.length; row++) {
+            for (int col = 0; col < arr[row].length; col++) {
+                for (int nextCol = 0; nextCol < arr[row].length; nextCol++) {
+                    if (arr[row][col] >= arr[row][nextCol]) {
+                        int temp = arr[row][col];
+                        arr[row][col] = arr[row][nextCol];
+                        arr[row][nextCol] = temp;
+                    }
+                }
+            }
 
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length; j++) {
+                    System.out.print(arr[i][j] + "  ");
+                }
+                System.out.println();
+            }
+        }
+        return arr;
+    }
+
+    private boolean sortRowsByLength(int[][] arr) {
+        boolean isSorted = true;
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i].length > arr[i + 1].length) {
+                int[] temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                isSorted = false;
+            }
+        }
+        return isSorted;
     }
 }
